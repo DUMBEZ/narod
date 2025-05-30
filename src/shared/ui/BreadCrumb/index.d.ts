@@ -1,7 +1,7 @@
 declare const BreadCrumb: ({ items }: {
     items: {
         id: number;
-        name: string;
+        title: string;
     }[];
 }) => import("react/jsx-runtime").JSX.Element;
 export default BreadCrumb;

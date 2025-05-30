@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import Footer from "../Footer";
 import styles from "./styles.module.css";
 import { useGetNavigationQuery, type INavigation } from "@/entities/navigation";
-import { Col, Drawer, Row } from "antd";
+import { Col, Drawer, Flex, Row } from "antd";
 import { useState } from "react";
 import ArrowDownIcon from "@/shared/icons/ArrowDownIcon";
 import { ROUTES } from "@/shared/constants";
@@ -19,22 +19,23 @@ const Layout = () => {
     const onClose = () => {
         setOpen(false);
     };
-    const nav: INavigation[] = [
-        {
-            id: 1,
-            name: "gasasgasg",
-            children: [
-                {
-                    id: 12,
-                    name: "25125",
-                },
-                {
-                    id: 13,
-                    name: "25125",
-                },
-            ],
-        },
-    ];
+    const Navi = ({ tree }: { tree: INavigation }) => {
+        return (
+            <div style={{ paddingLeft: 10 }}>
+                <Link onClick={onClose} to={`${ROUTES.PAGE}/${tree.id}`} style={{ width: "fit-content" }}>
+                    {tree.name}
+                </Link>
+                {tree?.children?.map((child) => {
+                    return (
+                        <div style={{ paddingLeft: 10, margin: "4px 0" }}>
+                            <Navi tree={child} />
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <div className={styles.header}>
@@ -42,14 +43,16 @@ const Layout = () => {
                     <div>
                         <img src="/logo.svg" />
                     </div>
-                    {nav.map((item) => (
-                        <div key={item.id} className={styles["nav-item"]} onMouseEnter={showDrawer}>
-                            <span>
-                                <ArrowDownIcon />
-                            </span>
-                            {item.name}
-                        </div>
-                    ))}
+                    <Row>
+                        {data?.map((item) => (
+                            <Col span={6} key={item.id} className={styles["nav-item"]} onMouseEnter={showDrawer}>
+                                <span>
+                                    <ArrowDownIcon />
+                                </span>
+                                {item.name}
+                            </Col>
+                        ))}
+                    </Row>
                 </div>
             </div>
             <div style={{ flex: 1, position: "relative", overflow: "hidden", background: "#E0E8F0" }}>
@@ -63,17 +66,16 @@ const Layout = () => {
                 >
                     <div style={{ background: "#fff", maxWidth: "1400px", margin: "auto" }}>
                         <Row gutter={16}>
-                            {nav.map((item) => (
-                                <Col span={4} key={item.id}>
-                                    <Link
-                                        onClick={onClose}
-                                        to={`${ROUTES.PAGE}/${item.id}`}
-                                        style={{ width: "fit-content" }}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                </Col>
-                            ))}
+                            {data &&
+                                data.map((item) => (
+                                    <Col span={6} key={item.id}>
+                                        {item.children?.map((citem) => (
+                                            <Flex vertical gap={4} key={citem.id}>
+                                                <Navi tree={citem} />
+                                            </Flex>
+                                        ))}
+                                    </Col>
+                                ))}
                         </Row>
                     </div>
                 </Drawer>

@@ -27,5 +27,5 @@ export type FileType = {
 
 export type BreadCrumbType = {
     id: number;
-    name: string;
+    title: string;
 };

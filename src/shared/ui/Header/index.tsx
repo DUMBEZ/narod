@@ -1,4 +1,4 @@
-import { useGetNavigationQuery, type INavigation } from "@/entities/navigation";
+import { useGetNavigationQuery } from "@/entities/navigation";
 
 import styles from "./styles.module.css";
 import ArrowDownIcon from "@/shared/icons/ArrowDownIcon";
@@ -17,22 +17,6 @@ const Header = () => {
     const onClose = () => {
         setOpen(false);
     };
-    const nav: INavigation[] = [
-        {
-            id: 1,
-            name: "gasasgasg",
-            children: [
-                {
-                    id: 12,
-                    name: "25125",
-                },
-                {
-                    id: 13,
-                    name: "25125",
-                },
-            ],
-        },
-    ];
 
     return (
         <div className={styles.header}>
@@ -40,7 +24,7 @@ const Header = () => {
                 <div>
                     <img src="./logo.svg" />
                 </div>
-                {nav.map((item) => (
+                {data?.map((item) => (
                     <div key={item.id} className={styles["nav-item"]} onMouseEnter={showDrawer}>
                         <span>
                             <ArrowDownIcon />
