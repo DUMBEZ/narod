@@ -40,9 +40,9 @@ const Layout = () => {
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <div className={styles.header}>
                 <div className={styles.content}>
-                    <div>
+                    <Link to={ROUTES.MAIN}>
                         <img src="/logo.svg" />
-                    </div>
+                    </Link>
                     <Row>
                         {data?.map((item) => (
                             <Col span={6} key={item.id} className={styles["nav-item"]} onMouseEnter={showDrawer}>
@@ -62,9 +62,16 @@ const Layout = () => {
                     onClose={onClose}
                     open={open}
                     getContainer={false}
+                    height={"500px"}
                     styles={{ body: { background: "#fff", color: "#000", padding: 0 } }}
                 >
-                    <div style={{ background: "#fff", maxWidth: "1400px", margin: "auto" }}>
+                    <div
+                        style={{
+                            background: "#fff",
+                            maxWidth: "1400px",
+                            margin: "auto",
+                        }}
+                    >
                         <Row gutter={16}>
                             {data &&
                                 data.map((item) => (

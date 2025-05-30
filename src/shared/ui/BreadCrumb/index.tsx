@@ -23,7 +23,7 @@ const BreadCrumb = ({ items }: { items: { id: number; title: string }[] }) => {
                 }}
                 style={{ height: "20px" }}
             >
-                {items.map((item, index) => (
+                {[...items].reverse().map((item, index) => (
                     <div key={item.id}>
                         {items.length === index + 1 ? (
                             <div
